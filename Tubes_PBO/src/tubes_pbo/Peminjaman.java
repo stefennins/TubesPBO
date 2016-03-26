@@ -3,23 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tubes_pbo;
+package tubespbo;
 
-/**
- *
- * @author Ivanarhea
- */
-public class Peminjaman {
+import java.util.*;
+
+public class Peminjaman{
     private String idPeminjaman;
     private Anggota peminjam;
-    private Buku[] buku;
+    private ArrayList<Buku> buku;
     private String tglPeminjaman;
+    private boolean statusPinjam;
     private int jumlahBuku;
-    private int maxBuku;
+    private int maxBuku;//
     private Petugas petugas;
     
     public Peminjaman(String idPeminjaman, String tglPeminjaman, int maxBuku, Anggota peminjam, Petugas petugas) {
-        buku = new Buku[maxBuku];
+        buku = new ArrayList<Buku>();
         this.idPeminjaman = idPeminjaman;
         this.tglPeminjaman = tglPeminjaman;
         this.maxBuku = maxBuku;
@@ -27,71 +26,30 @@ public class Peminjaman {
         this.peminjam = peminjam;
         this.petugas = petugas;
     }
-    ///menambahkan buku baru
-    public void addBuku(Buku buku){
-        if((getJumlahBuku()<getMaxBuku()) && (buku.isDipinjam() == false)){
-            this.getBuku()[getJumlahBuku()] = buku;
-            this.getBuku()[getJumlahBuku()].setDipinjam(true);
-            setJumlahBuku(getJumlahBuku() + 1);
-        } else if(buku.isDipinjam() == true){
-            System.out.println("MAAF, Buku Sudah Dipinjam");
-        } else {
-            System.out.println("MAAF, Jumlah Buku Melewati Batas Maksimal Peminjaman");
-        }
-    } 
-    ///mengurangi pinjaman buku
-    public void removeBuku(String idBuku){
-        boolean found = false;
-        int x;
-        for (int i=0; i<getJumlahBuku(); i++){
-            if (idBuku == null ? getBuku()[i].getIdBuku == null : idBuku.equals(getBuku()[i].getIdBuku)){
-                found = true; getBuku()[i]=null; break;
-            }
-        }
-        if (!found){
-            System.out.println("Buku yang anda cari tidak ketemu");
-            }
-    }
-
-    /**
-     * @return the idPeminjaman
-     */
-    public String getIdPeminjaman() {
-        return idPeminjaman;
-    }
-
-    /**
-     * @param idPeminjaman the idPeminjaman to set
-     */
-    public void setIdPeminjaman(String idPeminjaman) {
-        this.idPeminjaman = idPeminjaman;
-    }
-
-    /**
-     * @return the peminjam
-     */
-    public Anggota getPeminjam() {
-        return peminjam;
-    }
-
-    /**
-     * @param peminjam the peminjam to set
-     */
-    public void setPeminjam(Anggota peminjam) {
+    
+    public Peminjaman(Anggota peminjam, String tglPeminjaman, int jumlahBuku) {
         this.peminjam = peminjam;
+        this.tglPeminjaman = tglPeminjaman;
+        this.jumlahBuku = jumlahBuku;
+        statusPinjam = true;
     }
+    
+    public void setStatusDikembalikan() { statusPinjam = false; }
+    
+    public void addBuku(Buku buku){
+        if((jumlahBuku<maxBuku) && (buku.isDipinjam() == false)){
+            this.buku.add(buku);
+            buku.setDipinjam(true);
+            jumlahBuku++;
+        } else if(buku.isDipinjam() == true){
+            System.out.println("ERROR : Buku Sudah Dipinjam");
+        } else {
+            System.out.println("ERROR : Jumlah Buku Melewati Batas Maksimal");
+        }
+    }      
 
     /**
      * @return the buku
-     */
-    public Buku[] getBuku() {
-        return buku;
-    }
-
-    /**
-     * @param buku the buku to set
-     */
-    public void setBuku(Buku[] buku) {
         this.buku = buku;
     }
 
@@ -138,6 +96,20 @@ public class Peminjaman {
     }
 
     /**
+     * @return the peminjam
+     */
+    public Anggota getPeminjam() {
+        return peminjam;
+    }
+
+    /**
+     * @param peminjam the peminjam to set
+     */
+    public void setPeminjam(Anggota peminjam) {
+        this.peminjam = peminjam;
+    }
+
+    /**
      * @return the petugas
      */
     public Petugas getPetugas() {
@@ -150,5 +122,31 @@ public class Peminjaman {
     public void setPetugas(Petugas petugas) {
         this.petugas = petugas;
     }
+
+    /**
+     * @return the idPeminjaman
+     */
+    public String getIdPeminjaman() {
+        return idPeminjaman;
+    }
+
+    /**
+     * @param idPeminjaman the idPeminjaman to set
+     */
+    public void setIdPeminjaman(String idPeminjaman) {
+        this.idPeminjaman = idPeminjaman;
+    }
     
+    public ArrayList<Buku> getArrayBuku() { return buku; }
+   // public int getJumlahBuku() { return jumlahBuku; }
+    
+    @Override
+    public String toString(){
+        String tmp = "";
+        for(Buku b : buku){
+            tmp+="Buku "+b.getJudul()+"\n";
+        }
+        return tmp;
+    }
 }
+
