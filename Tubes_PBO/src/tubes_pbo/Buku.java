@@ -1,14 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package tubes_pbo;
+package tubespbo;
 
-/**
- *
- * @author Indri
- */
 public class Buku{
     private String judul;
     private String idBuku;
@@ -16,7 +7,6 @@ public class Buku{
     private String kondisi;
     private boolean dipinjam;
     private Anggota peminjam;
-    String getIdBuku;
 
     public Buku(String idBuku, String judul, String pengarang, String kondisi){
         this.judul = judul;
@@ -25,6 +15,10 @@ public class Buku{
         this.kondisi = kondisi;
         this.dipinjam = false;
     }
+    
+    public Buku(){
+        
+    };
 
     public String getJudul(){
             return judul;
@@ -55,7 +49,8 @@ public class Buku{
     }
 
     public void setKondisi(String kondisi){
-            this.kondisi = "Tidak Dipinjam";
+            this.kondisi = kondisi;
+            
     }
 
     /**
@@ -68,8 +63,6 @@ public class Buku{
     /**
      * @param dipinjam the dipinjam to set
      */
-
-    ///Method peminjaman sudah dikembalikan atau belum///
     public void setDipinjam(boolean dipinjam) {
         if(dipinjam == true){
             System.out.println("Buku "+judul+" Dipinjam");
@@ -93,4 +86,3 @@ public class Buku{
         this.peminjam = peminjam;
     }
 }
-
